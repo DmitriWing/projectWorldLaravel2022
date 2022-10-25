@@ -29,3 +29,7 @@ Route::get('/cities', [CityController::class, 'index']);
 
 // search
 Route::get('/search/', [CountryController::class, 'search'])->name('search');
+
+// countries by continent
+Route::get('/continent', [CountryController::class, 'listContinent']);
+Route::get('/continentCountry/{continent}', [CountryController::class, 'countryByContinent']);

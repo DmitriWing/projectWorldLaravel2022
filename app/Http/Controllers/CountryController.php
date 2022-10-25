@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\City;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CountryController extends Controller
 {
@@ -13,14 +14,13 @@ class CountryController extends Controller
      *
         * $countries = model name::orderBy('Code', 'asc')->latest()->paginate(8);
         * return view('folder.file', compact('array name'))->
-        * with('i', (request()->input('page', 1)-1)*8); row belongs to pagination
+        * with('i', (request()->input('page', 1)-1)*8); this row relate to pagination
 
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $countries = Country::orderBy('Code', 'asc')->latest()->paginate(8);
-
         $countriesCount = number_format(Country::count(), 0, ".", " ");
         return view('countries.listCountry', compact('countries', 'countriesCount'))->
         with('i', (request()->input('page', 1)-1)*8);
@@ -37,6 +37,35 @@ class CountryController extends Controller
         ->get();
         // return the search view with the result compacted
         return view('countries.searchCountry', compact('countries'));
+    }
+
+    public function listContinent(){
+        // list of continents
+        // $continents = Country::distinct()->get('continent');             // if Facades not in use
+        $continents = DB::table('country')                                  // use Illuminate\Support\Facades\DB;
+        ->select(DB::raw('distinct(continent), count(*) as countCountry'))
+        ->groupBy('continent')
+        ->get();
+        // list of countries
+        $countries = Country::orderBy('Code', 'asc')->get();
+        return view('countries.countryContinent', compact('continents', 'countries'));
+
+    }
+
+    public function countryByContinent($continent){
+        // list of continents
+        // $continents = Country::distinct()->get('continent');                 // if Facades not in use
+        $continents = DB::table('country')                                      // use Illuminate\Support\Facades\DB;
+        ->select(DB::raw('distinct(continent), count(*) as countCountry'))
+        ->groupBy('continent')
+        ->get();
+        // continents name for headers
+        $continentSingle = Country::where('Continent', $continent)->first();
+        $continentName = $continentSingle->Continent;
+        // list of countries by continent
+        $countries = Country::where('continent', $continent)->get();
+        return view('countries.countryContinent', compact('continents','continentSingle','continentName', 'countries'));
+
     }
 
     /**
