@@ -26,3 +26,6 @@ Route::get('/detail/{country}', [CountryController::class, 'show']);
 
 // cities
 Route::get('/cities', [CityController::class, 'index']);
+
+// search
+Route::get('/search/', [CountryController::class, 'search'])->name('search');

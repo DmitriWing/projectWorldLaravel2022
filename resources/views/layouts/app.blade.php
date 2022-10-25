@@ -20,6 +20,14 @@
         <a class="navbar-brand" href="{{ url('/') }}">Home </a>
         <a class="navbar-brand" href="{{ url('/countries') }}">Countries list</a>
         <a class="navbar-brand" href="{{ url('/cities') }}">Cities list</a>
+
+        <div class="nav navbar-nav navbar-right" style="margin-top:40px; margin-right:-150px;">
+          <form action="{{url('/search')}}" method="GET">
+            <input type="text" name="search" placeholder="country or continent" required>
+            <button type="submit">Search</button>
+          </form>
+          
+        </div>
       </div>
     </div>
   </nav>

@@ -52,6 +52,29 @@
 				<strong>Domain</strong> - {{ $country->Code2 }}
 			</div>
 		</div>	<!--col-sm-5 -->
+
+		<!-- Cities list -->
+<div class="col-sm-7" >
+	<h2>Cities list ({{$citiesCount}})</h2>
+	<table class="table table-striped">
+		<tr>
+			<th style="width:10%">NN</th>
+			<th style="width:30%">City name</th>
+			<th style="width:20%">Population</th>
+		</tr>
+		<?php $k=0; // это нумерация строк?>
+		@foreach ($countryCities as $city)
+		<?php $k++; // это нумерация строк?>
+		<tr>
+			<td>{{$k}}</td>
+			<td>{{$city->Name}}</td>
+			<td>{{$city->Population}}</td>
+		</tr>
+		@endforeach
+	</table>
+	<hr>
+	<!-- <p>Количество городов: </p> -->
+</div>
 	</div>	<!--row -->
  </div> <!--container -->
 @endsection

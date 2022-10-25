@@ -19,7 +19,6 @@ class CityController extends Controller
             $city['Population'] = number_format($city['Population'], 0, ".", " ");
         }
         $citiesCount = number_format(City::count(), 0, ".", " ");
-        // $cities = City::orderBy('Name', 'asc');
         return view('cities.listCity', compact('cities', 'citiesCount'))->
         with('i',(request()->input('page', 1)-1)*20);
     }
